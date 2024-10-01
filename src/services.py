@@ -13,6 +13,7 @@ def criar_usuario(nome, email, senha):
 
         cursor.execute(sql, values)
         conn.commit()
+        print('usuario cadastrado com sucesso')
         conn.close()
         cursor.close()
    else:
