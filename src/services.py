@@ -27,11 +27,39 @@ def listar_usuario():
         cursor.execute('select id, nome, email from usuario;')
 
         usuarios = cursor.fetchall()
-        return usuarios
+        cursor.close()
+        conn.close()
+        return usuarios 
+        
+    
     else:
         print("falha ao conectar ao banco")
 
 
-if __name__ == '__main__':
-    listar_usuario()
+def remover_usuario(email):
+    if conn.is_connected():
+        print('conectado mlk')
+
+        cursor = conn.cursor()
+
+        sql_select = 'select id, nome, email from usuario where email = %s;'
+        cursor.execute(sql_select,(email,))
+
+
+        usuario = cursor.fetchone()
+        if usuario:
+            print('usuario encontrado')
+            sql_delete = 'delete from usuario where email=%s'
+            cursor.execute(sql_delete, (email,))
+            print(f'usuario {usuario[1]} deletado com sucesso!')
+            conn.commit()
+            cursor.close()
+            conn.close()
+       
+        else:
+            print('usuario não encontrado')
+
+
+
+
     
